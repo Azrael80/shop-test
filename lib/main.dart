@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:shop_test/repository/product_repository.dart';
 
 void main() {
+  ProductRepository().getAll();
   runApp(const MyApp());
 }
 
