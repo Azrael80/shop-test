@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
           secondary: const Color(0xFFC6C5B9),
         ),
       ),
-      home: HomeLayout(),
+      home: const HomeLayout(),
     );
   }
 }

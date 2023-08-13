@@ -2,13 +2,17 @@
 import 'package:flutter/material.dart';
 import 'package:shop_test/presentation/product/product_screen.dart';
 import 'package:shop_test/presentation/product_list/product_list_screen.dart';
+import 'package:shop_test/routing/custom_navigation_observer.dart';
 
 class AppRouter {
-  static const String PRODUCT_LIST = '/home';
-  static const String PRODUCT = '/product';
+  static const String PRODUCT_LIST = 'products';
+  static const String PRODUCT = 'product';
 
-  /// Clé permettant d'accéder au navigateur.
+  /// Clé permettant d'accéder au navigateur interne.
   static final GlobalKey<NavigatorState> navigatorKey = GlobalKey();
+
+  /// Observer permettant l'écoute du navigateur interne.
+  static final CustomNavigatorObserver observer = CustomNavigatorObserver();
 
   static Map<
       String,

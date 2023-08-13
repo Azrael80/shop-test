@@ -10,23 +10,7 @@ class HomeLayout extends StatelessWidget {
     return WillPopScope(
       onWillPop: _onPop,
       child: Scaffold(
-        appBar: AppBar(
-          backgroundColor: Theme.of(context).primaryColor,
-          title: const Text('eShop', style: TextStyle(color: Colors.white)),
-          flexibleSpace: Container(
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.centerLeft,
-                end: Alignment.centerRight,
-                colors: [
-                  Theme.of(context).primaryColor,
-                  const Color(0xFF62929E),
-                ],
-                stops: const [0.4, 1.0],
-              ),
-            ),
-          ),
-        ),
+        appBar: _buildAppBar(Theme.of(context)),
         body: Column(
           children: [
             const ProductSearchBar(),
@@ -35,14 +19,69 @@ class HomeLayout extends StatelessWidget {
                 key: AppRouter.navigatorKey,
                 initialRoute: AppRouter.PRODUCT_LIST,
                 onGenerateRoute: (routeSettings) {
-                  return MaterialPageRoute(
-                    builder: (context) =>
+                  return PageRouteBuilder(
+                    pageBuilder: (context, _, __) =>
                         AppRouter.routes[routeSettings.name]!(context),
+                    transitionsBuilder: (_, a, __, c) => SlideTransition(
+                      position: Tween<Offset>(
+                        begin: const Offset(1, 0),
+                        end: Offset.zero,
+                      ).animate(a),
+                      child: c,
+                    ),
                   );
                 },
+                observers: [AppRouter.observer],
               ),
             ),
           ],
+        ),
+      ),
+    );
+  }
+
+  /// Permet de créer la barre de navigation.
+  AppBar _buildAppBar(ThemeData theme) {
+    return AppBar(
+      backgroundColor: theme.primaryColor,
+      titleSpacing: 0,
+      title: Row(
+        children: [
+          const SizedBox(width: 7.0),
+          StreamBuilder(
+            stream: AppRouter.observer.navigationStream,
+            builder: (context, snapshot) {
+              final nestedContext = AppRouter.navigatorKey.currentContext;
+
+              // Il n'est pas possible de depop la vue interne actuellement.
+              if (nestedContext == null ||
+                  !Navigator.of(nestedContext).canPop()) {
+                return const SizedBox(width: 0);
+              }
+
+              return GestureDetector(
+                onTap: _onPop,
+                child: const Padding(
+                  padding: EdgeInsets.only(right: 8.0),
+                  child: Icon(Icons.arrow_back, color: Colors.white),
+                ),
+              );
+            },
+          ),
+          const Text('eShop', style: TextStyle(color: Colors.white)),
+        ],
+      ),
+      flexibleSpace: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.centerLeft,
+            end: Alignment.centerRight,
+            colors: [
+              theme.primaryColor,
+              const Color(0xFF62929E),
+            ],
+            stops: const [0.4, 1.0],
+          ),
         ),
       ),
     );
@@ -53,9 +92,8 @@ class HomeLayout extends StatelessWidget {
     // Si on peut pop le navigateur interne, on le fait,
     // si ce n'est pas possible, c'est que l'utilisateur
     // souhaite quitter l'application.
-    // AppRouter.getNestedNavigator().
-    if (Navigator.canPop(AppRouter.navigatorKey.currentContext!)) {
-      AppRouter.getNestedNavigator().maybePop();
+    if (AppRouter.getNestedNavigator().canPop()) {
+      AppRouter.getNestedNavigator().pop();
       return false;
     }
 
