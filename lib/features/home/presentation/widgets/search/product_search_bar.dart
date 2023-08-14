@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shop_test/common/util/search.dart';
 
 class ProductSearchBar extends StatelessWidget {
   const ProductSearchBar({super.key});
@@ -15,7 +16,7 @@ class ProductSearchBar extends StatelessWidget {
             Theme.of(context).primaryColor,
             const Color(0xFF62929E),
           ],
-          stops: const [0.4, 1.0],
+          stops: const [0.5, 1.0],
         ),
         borderRadius: const BorderRadius.only(
           bottomLeft: Radius.circular(15),
@@ -32,7 +33,7 @@ class ProductSearchBar extends StatelessWidget {
         left: 8.0,
         right: 8.0,
         top: 8.0,
-        bottom: 15.0,
+        bottom: 20.0,
       ),
       child: _buildTextField(Theme.of(context)),
     );
@@ -41,6 +42,7 @@ class ProductSearchBar extends StatelessWidget {
   /// Créer le champ de recherche.
   Widget _buildTextField(ThemeData theme) {
     return TextField(
+      controller: Search.searchController,
       decoration: InputDecoration(
         filled: true,
         fillColor: Colors.white.withOpacity(0.6),

@@ -12,7 +12,17 @@ class ProductModel extends ProductEntity {
     String? brand,
     String? thumbnail,
     List<String>? images,
-  });
+  }) : super(
+          id: id,
+          title: title,
+          price: price,
+          description: description,
+          category: category,
+          rating: rating,
+          stock: stock,
+          brand: brand,
+          thumbnail: thumbnail,
+        );
 
   /// Création d'un produit depuis son JSON.
   factory ProductModel.fromJson(Map<String, dynamic> json) {

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shop_test/config/routes/app_routes.dart';
 import 'package:shop_test/features/home/presentation/widgets/cart/cart_button.dart';
 import 'package:shop_test/features/home/presentation/widgets/search/product_search_bar.dart';
 import 'package:shop_test/core/util/router/app_router.dart';
@@ -12,26 +13,15 @@ class HomePage extends StatelessWidget {
       onWillPop: _onPop,
       child: Scaffold(
         appBar: _buildAppBar(Theme.of(context)),
+        backgroundColor: Theme.of(context).colorScheme.background,
         body: Column(
           children: [
             const ProductSearchBar(),
             Expanded(
               child: Navigator(
                 key: AppRouter.navigatorKey,
-                initialRoute: AppRouter.PRODUCT_LIST,
-                onGenerateRoute: (routeSettings) {
-                  return PageRouteBuilder(
-                    pageBuilder: (context, _, __) =>
-                        AppRouter.routes[routeSettings.name]!(context),
-                    transitionsBuilder: (_, a, __, c) => SlideTransition(
-                      position: Tween<Offset>(
-                        begin: const Offset(1, 0),
-                        end: Offset.zero,
-                      ).animate(a),
-                      child: c,
-                    ),
-                  );
-                },
+                initialRoute: AppRoutes.PRODUCT_LIST,
+                onGenerateRoute: AppRoutes.onGenerateRoutes,
                 observers: [AppRouter.observer],
               ),
             ),
@@ -46,6 +36,7 @@ class HomePage extends StatelessWidget {
     return AppBar(
       backgroundColor: theme.primaryColor,
       titleSpacing: 0,
+      scrolledUnderElevation: 0,
       title: Row(
         children: [
           const SizedBox(width: 7.0),
@@ -81,7 +72,7 @@ class HomePage extends StatelessWidget {
               theme.primaryColor,
               const Color(0xFF62929E),
             ],
-            stops: const [0.4, 1.0],
+            stops: const [0.5, 1.0],
           ),
         ),
       ),

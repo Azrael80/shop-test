@@ -19,8 +19,16 @@ class ProductApiService {
   }
 
   /// Permet de récupérer tous les produits.
-  Future<List<Map<String, dynamic>>> getAll({int? page, int? limit}) async {
-    http.Response response = await http.get(Uri.parse('${API.url}/products'));
+  Future<List<Map<String, dynamic>>> fetch({
+    int skip = 0,
+    int limit = 100,
+    String query = '',
+  }) async {
+    http.Response response = await http.get(
+      Uri.parse(
+        '${API.url}/products/search?limit=$limit&skip=$skip&q=$query',
+      ),
+    );
 
     // On a un résultat on le retourne.
     if (response.statusCode == HttpStatus.ok) {

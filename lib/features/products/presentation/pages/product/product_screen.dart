@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shop_test/config/routes/app_routes.dart';
 import 'package:shop_test/core/util/router/app_router.dart';
 
 class ProductScreen extends StatelessWidget {
@@ -12,7 +13,7 @@ class ProductScreen extends StatelessWidget {
             Text('text 2'),
             TextButton(
               onPressed: () =>
-                  AppRouter.getNestedNavigator().pushNamed(AppRouter.PRODUCT),
+                  AppRouter.getNestedNavigator().pushNamed(AppRoutes.PRODUCT),
               child: Text('page +'),
             )
           ],

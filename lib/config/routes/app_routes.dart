@@ -1,19 +1,31 @@
+// ignore_for_file: constant_identifier_names
 import 'package:flutter/material.dart';
+import 'package:shop_test/common/util/search.dart';
 import 'package:shop_test/features/products/presentation/pages/product/product_screen.dart';
 import 'package:shop_test/features/products/presentation/pages/list/product_list_screen.dart';
-import 'package:shop_test/core/util/router/app_router.dart';
 
 class AppRoutes {
+  static const String PRODUCT_LIST = 'products';
+  static const String PRODUCT = 'product';
+
   static Route onGenerateRoutes(RouteSettings settings) {
     switch (settings.name) {
-      case AppRouter.PRODUCT_LIST:
-        return _generateRoute(ProductListScreen());
+      case AppRoutes.PRODUCT_LIST:
+        return _generateRoute(
+          ProductListScreen(
+            searchController: Search.searchController,
+          ),
+        );
 
-      case AppRouter.PRODUCT:
+      case AppRoutes.PRODUCT:
         return _generateRoute(ProductScreen());
 
       default:
-        return _generateRoute(ProductListScreen());
+        return _generateRoute(
+          ProductListScreen(
+            searchController: Search.searchController,
+          ),
+        );
     }
   }
 

@@ -22,9 +22,17 @@ class ProductRepositoryImpl implements ProductRepository {
   }
 
   @override
-  Future<List<ProductEntity>> getAll({int? page, int? limit}) async {
+  Future<List<ProductEntity>> fetch({
+    int skip = 0,
+    int limit = 100,
+    String query = '',
+  }) async {
     // Récupération du JSON des produits.
-    List<Map<String, dynamic>> jsons = await _productApiService.getAll();
+    List<Map<String, dynamic>> jsons = await _productApiService.fetch(
+      skip: skip,
+      limit: limit,
+      query: query,
+    );
 
     // Aucune données, on retourne une liste vide.
     if (jsons.isEmpty) {

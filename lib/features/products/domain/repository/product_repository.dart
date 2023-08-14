@@ -6,8 +6,9 @@ abstract class ProductRepository<T> {
 
   /// Permet de récupérer une liste d'entitées en fonction d'une [limit]
   /// ainsi que d'une [page] courante.
-  Future<List<ProductEntity>> getAll({
-    int? page,
-    int? limit,
+  Future<List<ProductEntity>> fetch({
+    int skip,
+    int limit,
+    String query,
   });
 }
