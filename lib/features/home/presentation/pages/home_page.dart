@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shop_test/config/routes/app_routes.dart';
-import 'package:shop_test/features/home/presentation/widgets/cart/cart_button.dart';
+import 'package:shop_test/features/cart/presentation/widgets/cart_button.dart';
 import 'package:shop_test/core/util/router/app_router.dart';
 
 class HomePage extends StatelessWidget {
