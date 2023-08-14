@@ -1,10 +1,11 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
-import 'package:shop_test/presentation/layouts/home_layout.dart';
-import 'package:shop_test/repository/product_repository.dart';
-import 'package:shop_test/routing/app_router.dart';
+import 'package:shop_test/config/theme/app_themes.dart';
+import 'package:shop_test/features/home/presentation/pages/home_page.dart';
 
 void main() {
-  ProductRepository().getAll();
+  HttpOverrides.global = HttpInterceptor();
   runApp(const MyApp());
 }
 
@@ -14,25 +15,27 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    final ThemeData theme = ThemeData(
-      useMaterial3: true,
-      primaryColor: const Color(0xff546A7B),
-    );
-
     return MaterialApp(
       title: 'eShop',
-      theme: theme.copyWith(
-        textTheme: theme.textTheme.copyWith(
-          displayLarge: const TextStyle(
-            color: Color(0xFF393D3F),
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        colorScheme: theme.colorScheme.copyWith(
-          secondary: const Color(0xFFC6C5B9),
+      theme: theme(
+        ThemeData(
+          useMaterial3: true,
+          primaryColor: const Color(0xff546A7B),
         ),
       ),
-      home: const HomeLayout(),
+      home: const HomePage(),
     );
+  }
+}
+
+/// Classe temporaire permettant d'ignorer les mauvais certificats.
+class HttpInterceptor extends HttpOverrides {
+  @override
+  HttpClient createHttpClient(SecurityContext? context) {
+    // On ignore les mauvais certificats (il s'agit d'un appli de test
+    // ils ne sont pas utiles).
+    return super.createHttpClient(context)
+      ..badCertificateCallback =
+          (X509Certificate cert, String host, int port) => true;
   }
 }

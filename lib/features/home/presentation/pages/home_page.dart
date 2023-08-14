@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:shop_test/presentation/widgets/search/product_search_bar.dart';
-import 'package:shop_test/routing/app_router.dart';
+import 'package:shop_test/features/home/presentation/widgets/cart/cart_button.dart';
+import 'package:shop_test/features/home/presentation/widgets/search/product_search_bar.dart';
+import 'package:shop_test/core/util/router/app_router.dart';
 
-class HomeLayout extends StatelessWidget {
-  const HomeLayout({super.key});
+class HomePage extends StatelessWidget {
+  const HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -84,6 +85,7 @@ class HomeLayout extends StatelessWidget {
           ),
         ),
       ),
+      actions: const [CartButton(color: Colors.white)],
     );
   }
 

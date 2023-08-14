@@ -1,8 +1,8 @@
 // ignore_for_file: constant_identifier_names
 import 'package:flutter/material.dart';
-import 'package:shop_test/presentation/product/product_screen.dart';
-import 'package:shop_test/presentation/product_list/product_list_screen.dart';
-import 'package:shop_test/routing/custom_navigation_observer.dart';
+import 'package:shop_test/features/products/presentation/pages/product/product_screen.dart';
+import 'package:shop_test/features/products/presentation/pages/list/product_list_screen.dart';
+import 'package:shop_test/core/util/router/custom_navigation_observer.dart';
 
 class AppRouter {
   static const String PRODUCT_LIST = 'products';
