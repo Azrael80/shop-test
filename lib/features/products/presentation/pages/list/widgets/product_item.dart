@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:shop_test/config/routes/app_routes.dart';
+import 'package:shop_test/core/util/router/app_router.dart';
 import 'package:shop_test/features/products/domain/entities/product.dart';
 
 class ProductItem extends StatelessWidget {
@@ -11,65 +13,71 @@ class ProductItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: double.maxFinite,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(8.0),
-        color: Colors.white,
-        boxShadow: const [
-          BoxShadow(
-            color: Colors.black,
-            blurRadius: 3.0,
-          ),
-        ],
+    return GestureDetector(
+      onTap: () => AppRouter.getNestedNavigator().pushNamed(
+        AppRoutes.PRODUCT,
+        arguments: product,
       ),
-      child: Column(
-        mainAxisSize: MainAxisSize.max,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          _buildTumbnail(),
-          Padding(
-            padding: const EdgeInsets.all(5.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    Flexible(
-                      flex: 8,
-                      fit: FlexFit.tight,
-                      child: Text(
-                        product.title ?? 'Iconnu',
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    ),
-                    Flexible(
-                      flex: 4,
-                      fit: FlexFit.tight,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          const Icon(Icons.star, size: 15),
-                          Text(
-                            '${product.rating}',
-                            textAlign: TextAlign.right,
-                          ),
-                        ],
-                      ),
-                    )
-                  ],
-                ),
-                Text(
-                  '${product.price}€',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ],
+      child: Container(
+        width: double.maxFinite,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(8.0),
+          color: Colors.white,
+          boxShadow: const [
+            BoxShadow(
+              color: Colors.black,
+              blurRadius: 3.0,
             ),
-          ),
-        ],
+          ],
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.max,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _buildTumbnail(),
+            Padding(
+              padding: const EdgeInsets.all(5.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Flexible(
+                        flex: 8,
+                        fit: FlexFit.tight,
+                        child: Text(
+                          product.title ?? 'Iconnu',
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                      Flexible(
+                        flex: 4,
+                        fit: FlexFit.tight,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            const Icon(Icons.star, size: 15),
+                            Text(
+                              '${product.rating}',
+                              textAlign: TextAlign.right,
+                            ),
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
+                  Text(
+                    '${product.price}€',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

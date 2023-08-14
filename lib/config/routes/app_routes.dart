@@ -1,6 +1,6 @@
 // ignore_for_file: constant_identifier_names
 import 'package:flutter/material.dart';
-import 'package:shop_test/common/util/search.dart';
+import 'package:shop_test/features/products/domain/entities/product.dart';
 import 'package:shop_test/features/products/presentation/pages/product/product_screen.dart';
 import 'package:shop_test/features/products/presentation/pages/list/product_list_screen.dart';
 
@@ -12,19 +12,19 @@ class AppRoutes {
     switch (settings.name) {
       case AppRoutes.PRODUCT_LIST:
         return _generateRoute(
-          ProductListScreen(
-            searchController: Search.searchController,
-          ),
+          const ProductListScreen(),
         );
 
       case AppRoutes.PRODUCT:
-        return _generateRoute(ProductScreen());
+        return _generateRoute(
+          ProductScreen(
+            product: settings.arguments as ProductEntity,
+          ),
+        );
 
       default:
         return _generateRoute(
-          ProductListScreen(
-            searchController: Search.searchController,
-          ),
+          const ProductListScreen(),
         );
     }
   }

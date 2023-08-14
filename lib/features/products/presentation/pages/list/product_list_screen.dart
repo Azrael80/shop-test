@@ -11,12 +11,7 @@ import 'package:shop_test/features/products/presentation/pages/list/widgets/prod
 import 'package:shop_test/features/products/presentation/pages/list/widgets/product_search_bar.dart';
 
 class ProductListScreen extends StatefulWidget {
-  final TextEditingController searchController;
-
-  const ProductListScreen({
-    super.key,
-    required this.searchController,
-  });
+  const ProductListScreen({super.key});
 
   @override
   State<ProductListScreen> createState() => _ProductListScreenState();
@@ -29,6 +24,9 @@ class _ProductListScreenState extends State<ProductListScreen> {
 
   // Utile afin de recharger la liste quand on a scroll jusqu'en bas.
   final _scrollController = ScrollController();
+
+  /// Editeur du champ de recherche.
+  final TextEditingController _searchController = TextEditingController();
 
   @override
   void initState() {
@@ -44,10 +42,10 @@ class _ProductListScreenState extends State<ProductListScreen> {
 
     // Ecoute du champ de recherche, si il change, alors on doit effectuer
     // la recherche.
-    widget.searchController.addListener(
+    _searchController.addListener(
       () {
         _bloc.add(
-          ProductListLoad(query: widget.searchController.text),
+          ProductListLoad(query: _searchController.text),
         );
       },
     );
@@ -57,74 +55,52 @@ class _ProductListScreenState extends State<ProductListScreen> {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        Column(
-          children: [
-            SizedBox(height: 73),
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8.0)
-                    .copyWith(top: 0.0),
-                child: BlocBuilder<ProductListBloc, ProductListState>(
-                  bloc: _bloc,
-                  builder: (context, state) {
-                    if (state is ProductListLoading) {
-                      loading = true;
-
-                      // Ajout de 5 items vide pour l'effet de chargement
-                      for (int i = 0; i < 8; i++) {
-                        products.add(const ProductModel(id: null));
-                      }
-                    }
-
-                    if (state is ProductListLoaded) {
-                      products = List<ProductModel>.from(state.products);
-                      loading = false;
-                    }
-
-                    return CustomGridList(
-                      items: products,
-                      scrollController: _scrollController,
-                      itemBuilder: (item) => item.id != null
-                          ? ProductItem(product: item)
-                          : const ProductLoadingItem(),
-                    );
-                  },
-                ),
-              ),
-            ),
-          ],
+        _buildBody(),
+        ProductSearchBar(
+          controller: _searchController,
         ),
-        const ProductSearchBar(),
       ],
     );
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 8.0).copyWith(top: 8.0),
-      child: BlocBuilder<ProductListBloc, ProductListState>(
-        bloc: _bloc,
-        builder: (context, state) {
-          if (state is ProductListLoading) {
-            loading = true;
+  }
 
-            // Ajout de 5 items vide pour l'effet de chargement
-            for (int i = 0; i < 8; i++) {
-              products.add(const ProductModel(id: null));
-            }
-          }
+  /// Créer le corps de la page contenant la liste.
+  Widget _buildBody() {
+    return Column(
+      children: [
+        const SizedBox(height: 73),
+        Expanded(
+          child: Padding(
+            padding:
+                const EdgeInsets.symmetric(horizontal: 8.0).copyWith(top: 0.0),
+            child: BlocBuilder<ProductListBloc, ProductListState>(
+              bloc: _bloc,
+              builder: (context, state) {
+                if (state is ProductListLoading) {
+                  loading = true;
 
-          if (state is ProductListLoaded) {
-            products = List<ProductModel>.from(state.products);
-            loading = false;
-          }
+                  // Ajout de 5 items vide pour l'effet de chargement
+                  for (int i = 0; i < 8; i++) {
+                    products.add(const ProductModel(id: null));
+                  }
+                }
 
-          return CustomGridList(
-            items: products,
-            scrollController: _scrollController,
-            itemBuilder: (item) => item.id != null
-                ? ProductItem(product: item)
-                : const ProductLoadingItem(),
-          );
-        },
-      ),
+                if (state is ProductListLoaded) {
+                  products = List<ProductModel>.from(state.products);
+                  loading = false;
+                }
+
+                return CustomGridList(
+                  items: products,
+                  scrollController: _scrollController,
+                  itemBuilder: (item) => item.id != null
+                      ? ProductItem(product: item)
+                      : const ProductLoadingItem(),
+                );
+              },
+            ),
+          ),
+        ),
+      ],
     );
   }
 
