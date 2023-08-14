@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shop_test/config/routes/app_routes.dart';
 import 'package:shop_test/features/home/presentation/widgets/cart/cart_button.dart';
-import 'package:shop_test/features/home/presentation/widgets/search/product_search_bar.dart';
 import 'package:shop_test/core/util/router/app_router.dart';
 
 class HomePage extends StatelessWidget {
@@ -14,18 +13,11 @@ class HomePage extends StatelessWidget {
       child: Scaffold(
         appBar: _buildAppBar(Theme.of(context)),
         backgroundColor: Theme.of(context).colorScheme.background,
-        body: Column(
-          children: [
-            const ProductSearchBar(),
-            Expanded(
-              child: Navigator(
-                key: AppRouter.navigatorKey,
-                initialRoute: AppRoutes.PRODUCT_LIST,
-                onGenerateRoute: AppRoutes.onGenerateRoutes,
-                observers: [AppRouter.observer],
-              ),
-            ),
-          ],
+        body: Navigator(
+          key: AppRouter.navigatorKey,
+          initialRoute: AppRoutes.PRODUCT_LIST,
+          onGenerateRoute: AppRoutes.onGenerateRoutes,
+          observers: [AppRouter.observer],
         ),
       ),
     );

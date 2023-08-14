@@ -8,6 +8,7 @@ import 'package:shop_test/features/products/domain/entities/product.dart';
 import 'package:shop_test/features/products/presentation/bloc/product_list/product_list_bloc.dart';
 import 'package:shop_test/features/products/presentation/pages/list/widgets/product_item.dart';
 import 'package:shop_test/features/products/presentation/pages/list/widgets/product_loading_item.dart';
+import 'package:shop_test/features/products/presentation/pages/list/widgets/product_search_bar.dart';
 
 class ProductListScreen extends StatefulWidget {
   final TextEditingController searchController;
@@ -54,6 +55,48 @@ class _ProductListScreenState extends State<ProductListScreen> {
 
   @override
   Widget build(BuildContext context) {
+    return Stack(
+      children: [
+        Column(
+          children: [
+            SizedBox(height: 73),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8.0)
+                    .copyWith(top: 0.0),
+                child: BlocBuilder<ProductListBloc, ProductListState>(
+                  bloc: _bloc,
+                  builder: (context, state) {
+                    if (state is ProductListLoading) {
+                      loading = true;
+
+                      // Ajout de 5 items vide pour l'effet de chargement
+                      for (int i = 0; i < 8; i++) {
+                        products.add(const ProductModel(id: null));
+                      }
+                    }
+
+                    if (state is ProductListLoaded) {
+                      products = List<ProductModel>.from(state.products);
+                      loading = false;
+                    }
+
+                    return CustomGridList(
+                      items: products,
+                      scrollController: _scrollController,
+                      itemBuilder: (item) => item.id != null
+                          ? ProductItem(product: item)
+                          : const ProductLoadingItem(),
+                    );
+                  },
+                ),
+              ),
+            ),
+          ],
+        ),
+        const ProductSearchBar(),
+      ],
+    );
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8.0).copyWith(top: 8.0),
       child: BlocBuilder<ProductListBloc, ProductListState>(
