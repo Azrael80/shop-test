@@ -6,13 +6,13 @@ class Cart {
   final List<CartItem> products = [];
 
   /// Singleton du panier
-  static final Cart _cart = Cart._();
+  static final Cart _cart = Cart.create();
 
   factory Cart() {
     return _cart;
   }
 
-  Cart._();
+  Cart.create();
 
   /// Prix total du panier.
   double get totalPrice => products.fold(0, (sum, item) => sum + item.price);
@@ -55,7 +55,7 @@ class Cart {
     }
 
     // Modification du produit existant dans le panier.
-    products[productIndex].count += count;
+    products[productIndex].count = count;
   }
 
   /// Supprime des produits du panier.
