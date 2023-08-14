@@ -22,6 +22,7 @@ class ProductModel extends ProductEntity {
           stock: stock,
           brand: brand,
           thumbnail: thumbnail,
+          images: images,
         );
 
   /// Création d'un produit depuis son JSON.
