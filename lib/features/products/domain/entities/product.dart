@@ -19,6 +19,9 @@ class ProductEntity extends Equatable {
   /// Note du produit.
   final double? rating;
 
+  /// Nombre de notes du produit
+  final int? ratingCount;
+
   /// Stock du produit.
   final int? stock;
 
@@ -38,6 +41,7 @@ class ProductEntity extends Equatable {
     this.description,
     this.category,
     this.rating,
+    this.ratingCount,
     this.stock,
     this.brand,
     this.thumbnail,
@@ -52,6 +56,7 @@ class ProductEntity extends Equatable {
         description,
         category,
         rating,
+        ratingCount,
         stock,
         brand,
         thumbnail,

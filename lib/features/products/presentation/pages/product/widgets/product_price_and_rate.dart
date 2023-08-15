@@ -1,6 +1,5 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
+import 'package:shop_test/common/widgets/product_rate/product_rate.dart';
 import 'package:shop_test/features/products/domain/entities/product.dart';
 
 class ProductPriceAndRate extends StatelessWidget {
@@ -15,7 +14,7 @@ class ProductPriceAndRate extends StatelessWidget {
         Flexible(
           fit: FlexFit.tight,
           child: Text(
-            '${product.price} €',
+            '${(product.price ?? 0).toStringAsFixed(2)} €',
             style: const TextStyle(
               color: Color(0xFFF3752B),
               fontWeight: FontWeight.bold,
@@ -24,31 +23,9 @@ class ProductPriceAndRate extends StatelessWidget {
           ),
         ),
         const Spacer(),
-        Padding(
-          padding: const EdgeInsets.only(right: 3.0),
-          child: Icon(
-            Icons.star,
-            color: Colors.orange[400],
-            size: 20,
-          ),
-        ),
-        Text.rich(
-          TextSpan(
-            text: '${product.rating} ',
-            children: [
-              TextSpan(
-                text: '(${Random().nextInt(2000) + 1})',
-                style: const TextStyle(
-                  fontWeight: FontWeight.normal,
-                ),
-              )
-            ],
-          ),
-          style: TextStyle(
-            color: Colors.black.withOpacity(0.7),
-            fontWeight: FontWeight.bold,
-            fontSize: 14,
-          ),
+        ProductRate(
+          rating: product.rating ?? 0,
+          count: product.ratingCount ?? 0,
         ),
       ],
     );

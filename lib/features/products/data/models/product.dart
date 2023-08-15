@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:shop_test/features/products/domain/entities/product.dart';
 
 class ProductModel extends ProductEntity {
@@ -8,6 +10,7 @@ class ProductModel extends ProductEntity {
     String? description,
     String? category,
     double? rating,
+    int? ratingCount,
     int? stock,
     String? brand,
     String? thumbnail,
@@ -33,6 +36,8 @@ class ProductModel extends ProductEntity {
       price: double.tryParse(json['price'].toString()) ?? 0,
       description: json['description'],
       rating: double.tryParse(json['rating'].toString()) ?? 0,
+      // Notre api ne contient pas le nombre de note, on l'invente
+      ratingCount: Random().nextInt(2500) + 1,
       category: json['category'],
       thumbnail: json['thumbnail'],
       brand: json['brand'],

@@ -4,10 +4,12 @@ import 'package:shop_test/features/cart/presentation/bloc/cart/cart_bloc.dart';
 
 class CartButton extends StatefulWidget {
   final Color? color;
+  final void Function() onPressed;
 
   const CartButton({
     super.key,
     this.color,
+    required this.onPressed,
   });
 
   @override
@@ -28,43 +30,57 @@ class _CartButtonState extends State<CartButton> {
           productCount = state.cart.totalProducts;
         }
 
-        return Stack(
-          children: <Widget>[
-            IconButton(
-              icon: Icon(
+        return IconButton(
+          icon: Stack(
+            children: [
+              Icon(
                 Icons.shopping_cart,
                 color: widget.color,
                 size: 30,
               ),
-              onPressed: () {},
-            ),
-            if (productCount > 0)
-              Positioned(
-                right: 11,
-                top: 11,
-                child: Container(
-                  padding: const EdgeInsets.all(2),
-                  decoration: const BoxDecoration(
-                    color: Colors.red,
-                    shape: BoxShape.circle,
-                  ),
-                  constraints: const BoxConstraints(
-                    minWidth: 14,
-                    minHeight: 14,
-                  ),
-                  child: Text(
-                    '$productCount',
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 8,
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                ),
-              )
-          ],
+              if (productCount > 0) _buildCount()
+            ],
+          ),
+          onPressed: widget.onPressed,
         );
       },
+    );
+  }
+
+  /// Permet d'afficher le nombre d'éléments
+  Widget _buildCount() {
+    return Positioned(
+      right: 0,
+      top: 0,
+      child: Container(
+        padding: const EdgeInsets.all(2),
+        decoration: BoxDecoration(
+          color: Colors.blue,
+          shape: BoxShape.circle,
+          border: Border.all(
+            width: 0.5,
+            color: Colors.white.withOpacity(0.7),
+          ),
+          boxShadow: const [
+            BoxShadow(
+              color: Colors.black,
+              blurRadius: 1.0,
+            ),
+          ],
+        ),
+        constraints: const BoxConstraints(
+          minWidth: 14,
+          minHeight: 14,
+        ),
+        child: Text(
+          '$productCount',
+          style: const TextStyle(
+            color: Colors.white,
+            fontSize: 8,
+          ),
+          textAlign: TextAlign.center,
+        ),
+      ),
     );
   }
 }

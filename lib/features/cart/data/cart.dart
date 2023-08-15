@@ -20,6 +20,9 @@ class Cart {
   /// Nombre total de produits.
   int get totalProducts => products.fold(0, (sum, item) => sum + item.count);
 
+  /// Le panier est vide.
+  bool get isEmpty => totalProducts == 0;
+
   /// Ajoute des produits au panier.
   void addProduct(ProductEntity product, {int count = 1}) {
     // Récupération du produit à changer
