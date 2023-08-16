@@ -19,13 +19,6 @@ void main() {
       expect(cart.totalProducts, 100);
     });
 
-    test("Test l'ajout de 0 objets", () {
-      final cart = Cart.create();
-      cart.addProduct(const ProductEntity(id: 1), count: 0);
-
-      expect(cart.totalProducts, 0);
-    });
-
     test("Test l'ajout de 1 objet dans un panier en contenant plusieurs", () {
       final cart = Cart.create();
       cart.products
@@ -33,6 +26,15 @@ void main() {
       cart.addProduct(const ProductEntity(id: 1), count: 1);
 
       expect(cart.totalProducts, 2001);
+    });
+
+    test("Text exception count < 1", () {
+      final cart = Cart.create();
+
+      expect(
+        () => cart.addProduct(const ProductEntity(id: 1), count: -1),
+        throwsA(isA<AssertionError>()),
+      );
     });
   });
 
