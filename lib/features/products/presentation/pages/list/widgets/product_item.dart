@@ -69,7 +69,7 @@ class ProductItem extends StatelessWidget {
                   ),
                   Text(
                     '${product.price}€',
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontWeight: FontWeight.bold,
                     ),
                   ),

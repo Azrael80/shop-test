@@ -22,6 +22,7 @@ class ProductModel extends ProductEntity {
           description: description,
           category: category,
           rating: rating,
+          ratingCount: ratingCount,
           stock: stock,
           brand: brand,
           thumbnail: thumbnail,

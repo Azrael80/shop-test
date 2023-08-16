@@ -13,11 +13,24 @@ class CartBloc extends Bloc<CartEvent, CartState> {
       : _cart = cart ?? Cart(),
         super(CartInitial()) {
     on<CartAddProduct>(_onCartAddProduct);
+    on<CartRemoveProduct>(_onCartRemoveProduct);
   }
 
-  /// Ajout d'objets au panier
+  /// Ajout d'objets au panier.
   void _onCartAddProduct(CartAddProduct event, Emitter emit) {
     _cart.addProduct(event.product, count: event.count);
+    emit(
+      CartUpdated(
+        _cart,
+        totalPrice: _cart.totalPrice,
+        totalProducts: _cart.totalProducts,
+      ),
+    );
+  }
+
+  /// Suppression d'objets du panier.
+  void _onCartRemoveProduct(CartRemoveProduct event, Emitter emit) {
+    _cart.removeProduct(event.product, count: event.count);
     emit(
       CartUpdated(
         _cart,

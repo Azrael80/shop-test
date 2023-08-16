@@ -55,10 +55,10 @@ void main() {
     });
   });
 
-  group('Cart removeProduct', () {
+  group('Cart deleteProduct', () {
     test("Test de la suppression d'un objet non présent", () {
       final cart = Cart.create();
-      cart.removeProduct(const ProductEntity(id: 1));
+      cart.deleteProduct(const ProductEntity(id: 1));
 
       expect(cart.totalProducts, 0);
     });
@@ -69,7 +69,7 @@ void main() {
 
       cart.products
           .add(CartItem(product: const ProductEntity(id: 2), count: 2000));
-      cart.removeProduct(product);
+      cart.deleteProduct(product);
 
       expect(cart.totalProducts, 2000);
     });
