@@ -1,11 +1,24 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shop_test/config/routes/app_routes.dart';
 import 'package:shop_test/config/theme/app_themes.dart';
+import 'package:shop_test/core/util/bloc_observer/app_bloc_observer.dart';
+import 'package:shop_test/features/cart/presentation/bloc/cart/cart_bloc.dart';
 import 'package:shop_test/features/home/presentation/pages/home_page.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
   HttpOverrides.global = HttpInterceptor();
+
+  // await SystemChrome.setPreferredOrientations([
+  //   DeviceOrientation.portraitUp,
+  // ]);
+
+  Bloc.observer = const AppBlocObserver();
+
   runApp(const MyApp());
 }
 
@@ -14,16 +27,21 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'eShop',
-      debugShowCheckedModeBanner: false,
-      theme: theme(
-        ThemeData(
-          useMaterial3: true,
-          primaryColor: const Color(0xff546A7B),
+    return BlocProvider<CartBloc>(
+      create: (ctx) => CartBloc(),
+      lazy: false,
+      child: MaterialApp(
+        title: 'eShop',
+        debugShowCheckedModeBanner: false,
+        theme: theme(
+          ThemeData(
+            useMaterial3: true,
+            primaryColor: const Color(0xff546A7B),
+          ),
         ),
+        home: const HomePage(),
+        onGenerateRoute: AppRoutes.onGenerateRoutes,
       ),
-      home: const HomePage(),
     );
   }
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shop_test/config/routes/app_routes.dart';
-import 'package:shop_test/features/home/presentation/widgets/cart/cart_button.dart';
+import 'package:shop_test/features/cart/data/cart.dart';
+import 'package:shop_test/features/cart/presentation/widgets/cart_button.dart';
 import 'package:shop_test/core/util/router/app_router.dart';
 
 class HomePage extends StatelessWidget {
@@ -11,7 +12,7 @@ class HomePage extends StatelessWidget {
     return WillPopScope(
       onWillPop: _onPop,
       child: Scaffold(
-        appBar: _buildAppBar(Theme.of(context)),
+        appBar: _buildAppBar(context),
         backgroundColor: Theme.of(context).colorScheme.background,
         body: Navigator(
           key: AppRouter.navigatorKey,
@@ -24,7 +25,9 @@ class HomePage extends StatelessWidget {
   }
 
   /// Permet de créer la barre de navigation.
-  AppBar _buildAppBar(ThemeData theme) {
+  AppBar _buildAppBar(BuildContext context) {
+    final theme = Theme.of(context);
+
     return AppBar(
       backgroundColor: theme.primaryColor,
       titleSpacing: 0,
@@ -68,7 +71,15 @@ class HomePage extends StatelessWidget {
           ),
         ),
       ),
-      actions: const [CartButton(color: Colors.white)],
+      actions: [
+        CartButton(
+          color: Colors.white,
+          onPressed: () => Navigator.of(context).pushNamed(
+            AppRoutes.CART,
+            arguments: Cart(),
+          ),
+        )
+      ],
     );
   }
 

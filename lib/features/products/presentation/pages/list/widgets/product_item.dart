@@ -23,10 +23,10 @@ class ProductItem extends StatelessWidget {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(8.0),
           color: Colors.white,
-          boxShadow: const [
+          boxShadow: [
             BoxShadow(
-              color: Colors.black,
-              blurRadius: 3.0,
+              color: Colors.black.withOpacity(0.7),
+              blurRadius: 10.0,
             ),
           ],
         ),
@@ -69,7 +69,7 @@ class ProductItem extends StatelessWidget {
                   ),
                   Text(
                     '${product.price}€',
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontWeight: FontWeight.bold,
                     ),
                   ),

@@ -10,7 +10,7 @@ ThemeData theme(ThemeData base) {
     ),
     colorScheme: base.colorScheme.copyWith(
       secondary: const Color(0xFFC6C5B9),
-      background: const Color(0xFFF4FAFF),
+      background: const Color.fromARGB(255, 224, 224, 224),
     ),
   );
 }

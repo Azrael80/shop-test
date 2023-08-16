@@ -59,8 +59,6 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
 
     emit(const ProductListLoading());
 
-    await Future.delayed(Duration(milliseconds: 1000));
-
     try {
       if (lastLoadedState == null) {
         // Chargement de la première page de produits.

@@ -67,12 +67,12 @@ class _ProductImagesState extends State<ProductImages> {
   List<Widget> get images => widget.imageUrls
       .map(
         (url) => Container(
-          color: Colors.grey.withOpacity(0.5),
+          color: Colors.grey.withOpacity(0.4),
           width: double.infinity,
           margin: const EdgeInsets.all(0.0),
           child: Image.network(
             url,
-            fit: BoxFit.cover,
+            fit: BoxFit.fitHeight,
           ),
         ),
       )
